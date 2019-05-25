@@ -34,6 +34,7 @@ public class UserssSeed implements CommandLineRunner {
 
 		QuestionRepository questionRepository = factory.createQuestionRepository();
 		if (questionRepository.findAll().isEmpty()) {
+			questionRepository.save(new Question("Question", "you can fix it by yourself","ana","11/11/11"));
 			questionRepository.save(new Question("Fixing database conection", "you can fix it by yourself","ana","11/11/11"));
 			questionRepository.save(new Question( "Fixing intelij error", "C.D@example.com","maria","12/12/12"));
 			questionRepository.save(new Question( "Fixing basic errors", "E.F@example.com","irina","13/13/13"));

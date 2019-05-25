@@ -7,21 +7,7 @@ class Model extends EventEmitter {
     constructor() {
         super();
         this.state = {
-            questions: [{
-              id:1,
-                author:"Ana",
-                title:"SQL problem",
-                text:"Connection problem",
-                creationDate:"11/02/2019",
-                tag:"SQL"
-            }, {
-                id:2,
-                author:"Mara",
-                title:"Linux problem",
-                text:"Random error",
-                creationDate:"18/02/2019",
-                tag:"LINUX"
-            }],
+            questions: [],
             newQuestion: {
                id:"",
                 author:"",
@@ -30,12 +16,11 @@ class Model extends EventEmitter {
                 creationDate:"",
                 tag:""
             },
-            searchQuestions:{},
-            toSearch:"",
-            currentId:2
-            
+            searchQuestions: [],
+            toSearch:""            
         };
     }
+
     loadQuestions()
     {
         return client.loadAllQuestions().then(questions => {
@@ -78,11 +63,13 @@ class Model extends EventEmitter {
     }
     findByTitle(){ 
         debugger;
-        const result=this.state.questions.filter(post=>post.title===this.state.toSearch)
-        this.state = {
-     ...this.state,
-     searchQuestions:result
-        };
+        return client.filterQuestionByTitle(this.state.toSearch).then(questions => {
+            this.state = {
+                ...this.state,
+                searchQuestions: questions
+            };
+            this.emit("change", this.state);
+        });
  }
  changeToSearch(property, value) {
     this.state = {

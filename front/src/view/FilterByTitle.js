@@ -18,13 +18,12 @@ const FilterByTitle= ({ questions}) => (
             <tbody>
                 {
                     questions.map((question, index) => (
-                        <tr key={index}> <td>
-                           {question.author}</td>
+                        <tr key={index}> 
+                            <td> {question.author}</td>
                             <td>{question.title}</td>
                             <td>{question.text}</td>
                             <td>{question.creationDate}</td>
                             <td>{question.tag}</td>
-                           
                            
                         </tr>
                     ))

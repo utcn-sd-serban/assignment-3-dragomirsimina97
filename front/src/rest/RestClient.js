@@ -30,4 +30,15 @@ export default class RestClient {
             }
         }).then(response => response.json());
     }
+
+
+    filterQuestionByTitle(title)
+    {
+        return fetch (BASE_URL + "/questions/title/" + title, {
+            method: "GET",
+            headers:{
+                "Authorization": this.authorization
+            }
+        }).then(response => response.json());
+    }
 }

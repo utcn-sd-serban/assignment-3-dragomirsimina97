@@ -3,6 +3,7 @@ package ro.utcn.spet.example.a1.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ro.utcn.spet.example.a1.command.CommandFactory;
 import ro.utcn.spet.example.a1.dto.QuestionDTO;
 import ro.utcn.spet.example.a1.entity.Question;
 import ro.utcn.spet.example.a1.exception.QuestionNotFoundException;
@@ -10,6 +11,7 @@ import ro.utcn.spet.example.a1.repository.QuestionRepository;
 import ro.utcn.spet.example.a1.repository.RepositoryFactory;
 import ro.utcn.spet.example.a1.repository.memory.InMemoryQuestionRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class QuestionManagementServive {
     private final RepositoryFactory repositoryFactory;
     private final QuestionRepository questionRepository;
+    private final CommandFactory commandFactory;
 
     // Transactional methods ensure that the code contained inside is run in a transaction, which is committed
     // when the methods returns and is rolled-back when an exception is thrown
@@ -33,11 +36,16 @@ public class QuestionManagementServive {
 
     }
     @Transactional
-    public List<Question> findtitle(String title) {
-        List<Question> myQuestions = repositoryFactory.createQuestionRepository().findAll().stream().filter((Question q)->q.getTitle().equals(title)).collect(Collectors.toList());
+    public List<QuestionDTO> findtitle(String title) {
+        List<Question> myQuestions = repositoryFactory.createQuestionRepository().findAll().stream().filter( q->
+                q.getTitle().toLowerCase().equals(title.toLowerCase())).collect(Collectors.toList());
+        List<QuestionDTO> questionsOut = new ArrayList<>();
+        for (Question q: myQuestions
+             ) {
+            questionsOut.add(QuestionDTO.ofEntity(q));
+        }
 
-
-        return myQuestions;
+        return questionsOut;
 
     }
     @Transactional
@@ -52,12 +60,7 @@ public class QuestionManagementServive {
 
     @Transactional
     public QuestionDTO insert ( QuestionDTO dto) {
-       Question question = new Question();
-        question.setTitle(dto.getTitle());
-       question.setText(dto.getText());
-        question.setAuthor(dto.getAuthor());
-        question.setCreationDate(dto.getCreationDate());
-        return QuestionDTO.ofEntity(questionRepository.save(question));
+        return commandFactory.askCommand().execute(dto);
     }
 
     @Transactional

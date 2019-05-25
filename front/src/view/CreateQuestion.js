@@ -6,7 +6,7 @@ const CreateQuestion = ({ author,title,text,creationDate,tag, onCreate, onChange
     <div className="hero-body">
       <div className="container ">
         <a className="button is-danger is-outlined"
-          onClick={onCreate}>Create
+          onClick={onCreate} data-cy="create">Create
  </a>
  
         <div>
@@ -18,22 +18,22 @@ const CreateQuestion = ({ author,title,text,creationDate,tag, onCreate, onChange
 
             <input
                     className="input is-danger is-focused" type="author" placeholder="Author"
-                    value={author} onChange={ e => onChange("author", e.target.value)  }/>
+                    value={author} data-cy="author" onChange={ e => onChange("author", e.target.value)  }/>
             <br />
                 <input
                     className="input is-danger is-focused" type="text" placeholder="Title"
-                    value={title} onChange={ e => onChange("title", e.target.value)  }/>
+                    value={title} data-cy="title" onChange={ e => onChange("title", e.target.value)  }/>
          <br/>
    
                 <input
                     className="input is-danger is-focused" type="text" placeholder="Text"
-                    value={text} onChange={e => onChange("text", e.target.value)}/>
+                    value={text} data-cy="text" onChange={e => onChange("text", e.target.value)}/>
             
             <br/>
    
                 <input
                     className="input is-danger is-focused" type="creationDate" placeholder="Creation Date"
-                    value={creationDate} onChange={ e => onChange("creationDate", e.target.value)  }/>
+                    value={creationDate} data-cy="creationDate"onChange={ e => onChange("creationDate", e.target.value)  }/>
         
      
         <br/>

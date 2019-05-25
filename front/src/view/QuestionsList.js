@@ -7,7 +7,7 @@ const QuestionsList = ({ questions,onCreateQuestion, onViewDetails ,searchQuesti
       <div className="container ">
         <p className="title ">Questions </p>
         <a className="button is-danger is-outlined is-left"
-          onClick={onCreateQuestion}>Create Question
+          onClick={onCreateQuestion} data-cy="add">Create Question
  </a>
  <input onChange={e =>onChangeToSearch("toSearch",e.target.value)}></input>
                 <a className="button is-danger is-outlined " onClick={searchQuestionsTitle}>
@@ -38,7 +38,7 @@ const QuestionsList = ({ questions,onCreateQuestion, onViewDetails ,searchQuesti
             <tbody>
                 {
                     questions.map((question, index) => (
-                        <tr key={index}> <td>
+                        <tr key={index} data-cy="Author"> <td>
                            {question.author}</td>
                             <td>{question.title}</td>
                             <td>{question.text}</td>
