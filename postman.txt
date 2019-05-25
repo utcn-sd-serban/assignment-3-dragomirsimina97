@@ -1,0 +1,27 @@
+pm.test("Verify Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("response must be valid and have a body", function () {
+     pm.response.to.be.ok;
+     pm.response.to.be.withBody;
+     
+});
+
+pm.test("Autorul intrebarii 2 este", function(){
+   var users = pm.response.json();
+   pm.expect(users[2].author).to.be.equal("Marcel");
+});
+
+pm.test("Marcel a creat ", function(){
+   var questions = pm.response.json();
+   var aux = 0;
+   for(var i = 0; i < questions.length; i++)
+   {
+       if (questions[i].author === "Marcel")
+       {
+          aux++;
+       }
+   }
+   pm.expect(aux).to.be.equal(12);
+});
